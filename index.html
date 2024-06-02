@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Bencana</title>
+    <link rel="stylesheet" href="home.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+</head>
+<style>
+    /* Styling untuk tabel */
+    table {
+    border-collapse: collapse;
+    width: 100%;
+    background-color: #336b87; /* Warna latar belakang abu-abu terang */
+    color: #dddddd;
+    }
+
+    th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    }
+
+    th {
+    background-color: #e0e0e0; /* Warna latar belakang abu-abu muda untuk kolom kepala */
+    }
+</style>
+<body>
+    <header>
+        <h1>Prediksi Bencana Banjir di Wilayah DKI Jakarta</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="Databanjir.html">Jumlah Titik Banjir</a></li>
+                <li><a href="korbanBanjir.html">Jumlah korban Banjir</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="content">
+        <img src="peta dki.png" alt="Gambar Bencana">
+        <div id="csvData"></div>
+        <button onclick="loadCSV('dataset_curah_hujan.csv')">Dataset Curah Hujan</button>
+        <button onclick="loadCSV('dataset_riwayat_banjir.csv')">Dataset Riwayat Banjir</button>
+    </div>
+
+    <script>
+        function loadCSV(filename) {
+            $.get(filename, function(data) {
+                var rows = data.split('\n');
+                var table = '<table>';
+                rows.forEach(function(row) {
+                    table += '<tr>';
+                    var columns = row.split(',');
+                    columns.forEach(function(column) {
+                        table += '<td>' + column + '</td>';
+                    });
+                    table += '</tr>';
+                });
+                table += '</table>';
+                $('#csvData').html(table);
+            });
+        }
+    </script>
+</body>
+</html>
